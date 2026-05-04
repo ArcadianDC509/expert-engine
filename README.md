@@ -17,7 +17,7 @@ The fetcher aka the `downloader.ps1` will try to create a directory if C:\Tools 
 ## How it should be detected or prevented
 - Antivirus, like any of them
 - Script execution disabled for windows
-- At the network level, seeing self signed tls traffic
+- At the network level, seeing tls traffic with self signed certificates is a pretty good IoC
 
 ## Side Notes
 This utility must be run as administrator, so it may end up only being usefull for testing exfiltration and lateral movement from an infected host, like I said in the beginning there are much more mature tools out there that will achieve greater results and are battle tested. This is just a side project to get thinking about the complexity of system compromise on engagements that happen in the future.
