@@ -14,7 +14,10 @@ If supplied with an ip address and port number then the attacker IP and port tha
 
 The fetcher aka the `downloader.ps1` will try to create a directory if C:\Tools does not exist, set an exclusion path in that folder then cd to it. The script that will be pulled down will be autonuked by windows defender otherwise. The downloader will then take the file from the attacker hosted webserver and execute it as `automate.ps1`. Once the payload script has ended the downloader will try to reverse the exclusion so the target host is not more vulnerable than it started. NOTE: if exclusions exist prior to the running of the script that should be noted as to not damage existing rules based on company policy, its a thing.
 
-
+## How it should be detected or prevented
+- Antivirus, like any of them
+- Script execution disabled for windows
+- At the network level, seeing self signed tls traffic
 
 ## Side Notes
 This utility must be run as administrator, so it may end up only being usefull for testing exfiltration and lateral movement from an infected host, like I said in the beginning there are much more mature tools out there that will achieve greater results and are battle tested. This is just a side project to get thinking about the complexity of system compromise on engagements that happen in the future.
