@@ -1,0 +1,26 @@
+# Sturdy Umbrella
+Custom simple TLS encrypted remote shell for windows and linux based systems, powershell empire probably does it better but this is a fun project.
+
+Use of this script is only for capture the flag, authorized penetration tests, and educational purposes of learning how to better secure shell communcations so that sensitive information is not leaked over the network.
+
+## Files
+
+The `server.py` file contains a quick and dirty upload server, the `start.sh` file will start the attack server it is used like so `./start.sh <attacker-ip> <target-ip>` with an optional domain name as the last option which will be supplied to create the certificate for the `sslserver` utility.
+
+The templates folder is not needed but it includes all of the templates that are known to be working during development.
+
+## How it works
+If supplied with an ip address and port number then the attacker IP and port that is listening on the attacker controlled infrastructure will be used, if not then the defaults of 443 and 8443 will be used for communication over the network. The attacker machine will start up a simple python webserver that hosts the fetcher and the execution scripts.
+
+The fetcher aka the `downloader.ps1` will try to create a directory if C:\Tools does not exist, set an exclusion path in that folder then cd to it. The script that will be pulled down will be autonuked by windows defender otherwise. The downloader will then take the file from the attacker hosted webserver and execute it as `automate.ps1`. Once the payload script has ended the downloader will try to reverse the exclusion so the target host is not more vulnerable than it started. NOTE: if exclusions exist prior to the running of the script that should be noted as to not damage existing rules based on company policy, its a thing.
+
+
+
+## Side Notes
+This utility must be run as administrator, so it may end up only being usefull for testing exfiltration and lateral movement from an infected host, like I said in the beginning there are much more mature tools out there that will achieve greater results and are battle tested. This is just a side project to get thinking about the complexity of system compromise on engagements that happen in the future.
+It is not particularly clever when it comes to encoding and obfuscation, first of all it uses a self signed certificate but it does try to hide behind common ports which is okay.
+
+## Requirements
+- The Windows based computer must allow for running scripts using the `Set-ExecutionPolicy Unrestricted`
+- Next Windows defender must have an exclusion enabled for the `C:\Tools` folder or have the ability to do so.
+- Those two points said, the intital downloader script will attempt to do both of those things using the `IEX` statement that is output after the script is started
